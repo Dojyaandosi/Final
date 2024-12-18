@@ -1,0 +1,24 @@
+services:
+  web:  # Renamed from 'flask' to 'web'
+    build: .
+    ports:
+      - "5000:5000"  # Host port 5001 to container port 5001
+    environment:
+      - FLASK_ENV=development
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13  # Use the official PostgreSQL 13 image
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: doston  # Replace with your actual password
+      POSTGRES_DB: dosya # This is the database name that will be created
+    ports:
+      - "5432:5432"  # Expose port 5432 for PostgreSQL
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Persist PostgreSQL data between restarts
+
+volumes:
+  postgres_data:
+
